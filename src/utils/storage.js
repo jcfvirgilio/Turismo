@@ -1,15 +1,22 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const saveItem = async (keyName, keyValue) => {
+
+
+
+export const saveItem = async (keyName, value) => {
   try {
-    return await AsyncStorage.saveItem(keyName, keyValue);
+
+    await AsyncStorage.setItem(keyName, value);
+    console.log('Datos almacenados correctamente.');
+    return true;
   } catch (error) {
-    return false;
+    console.log('Error al almacenar los datos: ', error);
   }
 };
 
 export const getItem = async (keyName) => {
   try {
+    console.log('dentro de getItem ::::', keyName);
     return await AsyncStorage.getItem(keyName);
   } catch (error) {
     return false;

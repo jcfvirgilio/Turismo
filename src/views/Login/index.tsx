@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme, Button, Text, Box } from 'native-base';
+
 import * as WebBrowser from 'expo-web-browser';
-import { saveItem } from '../../utils/storage';
-import { ACCESS_TOKEN, USER_INFO, GOOGLE_SUCCESS_MESSAGE } from '../../consts';
+import { saveItem, getItem } from '../../utils/storage';
+import { ACCESS_TOKEN, USER_INFO, HOME } from '../../consts';
 import environment from '../../../environment';
 import * as Google from 'expo-auth-session/providers/google';
 import styles from './style';
@@ -11,10 +12,11 @@ WebBrowser.maybeCompleteAuthSession();
 
 const { androidClientId, iosClientId, expoClientId } = environment();
 
-export function Login(): JSX.Element {
+export function Login({ navigation }): JSX.Element {
   const theme = useTheme();
-  const [token, setToken] = useState('');
-  const [userInfo, setUserInfo] = useState(null);
+  const [isToken, setIsToken] = useState(false);
+  const [isUser, setIsUser] = useState(false);
+  const [token, setToken] = useState(false);
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId,
     iosClientId,
@@ -23,17 +25,11 @@ export function Login(): JSX.Element {
 
   useEffect(() => {
     if (response?.type === 'success') {
-      console.log('RESPONSE::', response);
       setToken(response.authentication.accessToken);
-      saveToken();
+      saveToken(response.authentication.accessToken);
       getUserInfo();
     }
-  }, [response, token]);
-
-  const saveToken = async () => {
-    const tokenResult = await saveItem(ACCESS_TOKEN, token);
-    console.log('tokenResult::', tokenResult);
-  };
+  }, [response, isToken]);
 
   const getUserInfo = async () => {
     try {
@@ -43,10 +39,34 @@ export function Login(): JSX.Element {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      const user = await response.json();
-      const userResult = await saveItem(USER_INFO, JSON.stringify(user));
+      const userResponse = await response.json();
+      console.log('userResponse::::', userResponse);
+      saveUser(userResponse);
+      redirect();
     } catch (error) {
-      alert(error);
+      alert('getUserInfo:' + error);
+    }
+  };
+
+  const saveToken = async (token: string) => {
+    let tokenResult = await saveItem(ACCESS_TOKEN, token);
+    setIsToken(tokenResult);
+  };
+
+  const saveUser = async (userInfo: object) => {
+    let userResult = await saveItem(USER_INFO, JSON.stringify(userInfo));
+    setIsUser(userResult);
+  };
+
+  const redirect = () => {
+    console.log('user:::::', isUser);
+    console.log('token:::::', isToken);
+
+    console.info(getItem(USER_INFO));
+    if (isUser && isToken) {
+      navigation.navigate(HOME);
+    } else {
+      alert('Error al iniciar sesion');
     }
   };
 
@@ -54,8 +74,9 @@ export function Login(): JSX.Element {
     <Box backgroundColor="customWhite" style={styles.content}>
       <Text style={theme.styles.global.headerClass}>Bienvenidos</Text>
       <Text style={theme.styles.global.bodyClass}>
-        Inicie sesión para continuar
+        Inicie sesión con Google
       </Text>
+
       <Button
         backgroundColor="customBlue"
         shadow={5}

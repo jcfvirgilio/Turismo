@@ -12,7 +12,8 @@ import {
   useMediaQuery,
 } from 'native-base';
 import { useHeaderHeight } from '@react-navigation/elements';
-import { LOGIN } from '../../consts';
+import { LOGIN, HOME, ACCESS_TOKEN } from '../../consts';
+import { getItem } from '../../utils/storage';
 
 interface LoadingPageProps {
   navigation: NativeStackNavigationProp<any>;
@@ -28,8 +29,13 @@ export function LoadingPage({ navigation }: LoadingPageProps): JSX.Element {
   });
 
   useEffect(() => {
-    navigation.navigate(LOGIN);
+    redirect();
   });
+
+  const redirect = async () => {
+    const token = await getItem(ACCESS_TOKEN);
+    navigation.navigate(token ? HOME : LOGIN);
+  };
 
   return (
     <Box backgroundColor="customBlue">
@@ -55,9 +61,3 @@ export function LoadingPage({ navigation }: LoadingPageProps): JSX.Element {
     </Box>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
