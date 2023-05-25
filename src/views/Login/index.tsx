@@ -3,20 +3,22 @@ import { useTheme, Button, Text, Box } from 'native-base';
 import * as WebBrowser from 'expo-web-browser';
 import { saveItem } from '../../utils/storage';
 import { ACCESS_TOKEN, USER_INFO, GOOGLE_SUCCESS_MESSAGE } from '../../consts';
+import environment from '../../../environment';
 import * as Google from 'expo-auth-session/providers/google';
 import styles from './style';
 
 WebBrowser.maybeCompleteAuthSession();
+
+const { androidClientId, iosClientId, expoClientId } = environment();
 
 export function Login(): JSX.Element {
   const theme = useTheme();
   const [token, setToken] = useState('');
   const [userInfo, setUserInfo] = useState(null);
   const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: process.env.ANDROID_CLIENT_ID,
-    iosClientId: process.env.IOS_CLIENT_ID,
-    expoClientId:
-      '341789429260-rr431gcgr2g44frhsn4g43499jvpeh43.apps.googleusercontent.com',
+    androidClientId,
+    iosClientId,
+    expoClientId,
   });
 
   useEffect(() => {
