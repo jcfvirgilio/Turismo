@@ -16,6 +16,11 @@ export const theme = extendTheme({
 
   styles: {
     global: {
+      'headerBarClass': {
+        backgroundColor: '#002333',
+        justifyContent: "space-between",
+        padding: 10
+      },
       'headerClass': {
         color: '#012E40',
         //   fontFamily: 'Quattrocento-Bold',

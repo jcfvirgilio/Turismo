@@ -24,7 +24,11 @@ export const AppNavigator: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Stack.Screen name={LOADING_PAGE} component={LoadingPage} />
       <Stack.Screen
         name={LOGIN}

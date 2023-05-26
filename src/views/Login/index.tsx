@@ -59,10 +59,6 @@ export function Login({ navigation }): JSX.Element {
   };
 
   const redirect = () => {
-    console.log('user:::::', isUser);
-    console.log('token:::::', isToken);
-
-    console.info(getItem(USER_INFO));
     if (isUser && isToken) {
       navigation.navigate(HOME);
     } else {
