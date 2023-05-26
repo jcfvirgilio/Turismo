@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useTheme, Button, Text, Box } from 'native-base';
+import { useTheme, Button, Text, Box, Center, Heading } from 'native-base';
 
 import * as WebBrowser from 'expo-web-browser';
 import { saveItem, getItem } from '../../utils/storage';
 import { ACCESS_TOKEN, USER_INFO, HOME } from '../../consts';
 import environment from '../../../environment';
 import * as Google from 'expo-auth-session/providers/google';
-import styles from './style';
+import { Ionicons } from '@expo/vector-icons';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -67,23 +67,24 @@ export function Login({ navigation }): JSX.Element {
   };
 
   return (
-    <Box backgroundColor="customWhite" style={styles.content}>
-      <Text style={theme.styles.global.headerClass}>Bienvenidos</Text>
-      <Text style={theme.styles.global.bodyClass}>
-        Inicie sesión con Google
-      </Text>
-
+    <Center h="100%">
+      <Box h="20%">
+        <Center h="30%">
+          <Heading style={theme.styles.global.headerClass}>Bienvenidos</Heading>
+          <Text style={theme.styles.global.bodyClass}>Inicie sesión</Text>
+        </Center>
+      </Box>
       <Button
-        backgroundColor="customBlue"
+        backgroundColor="customButtonGoogle"
         shadow={5}
-        style={styles.button}
-        size="lg"
+        w="70%"
+        leftIcon={<Ionicons name="logo-google" size={32} color="white" />}
         onPress={() => {
           promptAsync();
         }}
       >
-        Acceder
+        Google
       </Button>
-    </Box>
+    </Center>
   );
 }

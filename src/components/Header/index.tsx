@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTheme, HStack, Avatar, Text } from 'native-base';
-
+import { useTheme, HStack, Avatar, Box, VStack, Center } from 'native-base';
+import { SearchComponent } from '../SearchComponent';
 type HeaderProps = {
   imageUri: string;
 };
@@ -9,16 +9,19 @@ export function Header({ imageUri }: HeaderProps): JSX.Element {
   const theme = useTheme();
 
   return (
-    <HStack style={theme.styles.global.headerBarClass}>
-      <HStack alignItems="center" />
-      <HStack>
-        <Avatar
-          bg="green.500"
-          source={{
-            uri: imageUri,
-          }}
-        />
+    <VStack>
+      <HStack style={theme.styles.global.headerBarClass}>
+        <HStack alignItems="center" />
+        <HStack>
+          <Avatar
+            bg="green.500"
+            source={{
+              uri: imageUri,
+            }}
+          />
+        </HStack>
       </HStack>
-    </HStack>
+      <SearchComponent />
+    </VStack>
   );
 }

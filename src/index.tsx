@@ -12,12 +12,11 @@ import * as Font from 'expo-font';
 const store = Store();
 
 export const AppContainer: React.FC = () => {
-  /* const [loaded] = useFonts({
+  const [loaded] = useFonts({
     'Quattrocento-Bold': require('../assets/fonts/Quattrocento/Quattrocento-Bold.ttf'),
     'Quattrocento-Regular': require('../assets/fonts/Quattrocento/Quattrocento-Regular.ttf'),
   });
 
-   console.log('loaded::::', loaded);
   if (!loaded) {
     return (
       <NativeBaseProvider theme={theme}>
@@ -25,7 +24,7 @@ export const AppContainer: React.FC = () => {
       </NativeBaseProvider>
     );
   }
-*/
+
   return (
     <Provider store={store}>
       <NavigationContainer>
