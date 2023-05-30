@@ -1,27 +1,25 @@
 import React from 'react';
-import { useTheme, HStack, Avatar, Box, VStack, Center } from 'native-base';
-import { SearchComponent } from '../SearchComponent';
+import { useTheme, HStack, VStack, Avatar } from 'native-base';
+
 type HeaderProps = {
   imageUri: string;
+  navigation: object;
 };
 
-export function Header({ imageUri }: HeaderProps): JSX.Element {
+export function Header({ imageUri, navigation }: HeaderProps): JSX.Element {
   const theme = useTheme();
 
   return (
-    <VStack>
-      <HStack style={theme.styles.global.headerBarClass}>
-        <HStack alignItems="center" />
-        <HStack>
-          <Avatar
-            bg="green.500"
-            source={{
-              uri: imageUri,
-            }}
-          />
-        </HStack>
+    <HStack style={theme.styles.global.headerBarClass}>
+      <HStack alignItems="center" />
+      <HStack>
+        <Avatar
+          bg="green.500"
+          source={{
+            uri: imageUri,
+          }}
+        />
       </HStack>
-      <SearchComponent />
-    </VStack>
+    </HStack>
   );
 }

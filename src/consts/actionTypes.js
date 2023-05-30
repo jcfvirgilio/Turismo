@@ -1,0 +1,4 @@
+export const GET_LOCATIONS_START = 'turismo:GET_LOCATIONS_START';
+export const GET_LOCATIONS_SUCCESS = 'turismo:GET_LOCATIONS_SUCCESS';
+export const GET_LOCATIONS_ERROR = 'turismo:GET_LOCATIONS_ERROR';
+

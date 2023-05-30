@@ -6,7 +6,7 @@ import { LOADING_PAGE, LOGIN, HOME, RESULTS, PROFILE } from '../consts';
 
 import { Login } from '../views/Login';
 import { Home } from '../views/Home';
-import { LoadingPage } from '../views/LoadingPage';
+import { LoadingPage } from '../views/LoadingPage/LoadingPageIndex';
 import { Results } from '../views/Results';
 import { Profile } from '../views/Profile';
 
