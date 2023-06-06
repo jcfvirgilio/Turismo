@@ -25,6 +25,12 @@ export const theme = extendTheme({
         justifyContent: "space-between",
         padding: 10
       },
+      'title': {
+        fontSize: 20,
+        textTransform: 'capitalize',
+        color: '#FFF',
+        fontWeight: 'bold',
+      },
       'label': {
         color: 'silver',
         fontSize: 15,

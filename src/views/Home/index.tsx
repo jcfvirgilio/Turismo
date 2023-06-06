@@ -8,7 +8,8 @@ import { SearchComponent } from '../../components/SearchComponent';
 
 export function Home() {
   const navigation = useNavigation();
-  const [userData, setUserData] = useState<string | undefined>();
+  const [userImage, setUserImage] = useState<string | undefined>();
+  const [name, setName] = useState<string | undefined>();
 
   useEffect(() => {
     loadUserInfo();
@@ -16,8 +17,9 @@ export function Home() {
 
   const loadUserInfo = async () => {
     let userInfo = await getItem(USER_INFO);
-    let { picture } = JSON.parse(userInfo);
-    setUserData(picture);
+    let { picture, name } = JSON.parse(userInfo);
+    setUserImage(picture);
+    setName(name);
   };
 
   const safeAreaProps = useSafeArea({
@@ -27,7 +29,7 @@ export function Home() {
 
   return (
     <Box {...safeAreaProps}>
-      <Header imageUri={userData} />
+      <Header imageUri={userImage} name={name} />
       <SearchComponent navigation={navigation} />
     </Box>
   );

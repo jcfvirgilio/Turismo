@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme, Button, Text, Box, Center, Heading } from 'native-base';
 
+import axios from 'axios';
 import * as WebBrowser from 'expo-web-browser';
 import { saveItem, getItem } from '../../utils/storage';
 import { ACCESS_TOKEN, USER_INFO, HOME } from '../../consts';
@@ -14,9 +15,10 @@ const { androidClientId, iosClientId, expoClientId } = environment();
 
 export function Login({ navigation }): JSX.Element {
   const theme = useTheme();
-  const [isToken, setIsToken] = useState(false);
-  const [isUser, setIsUser] = useState(false);
-  const [token, setToken] = useState(false);
+  const [isToken, setIsToken] = useState<boolean>(false);
+  const [isUser, setIsUser] = useState<boolean>(false);
+  const [token, setToken] = useState<string>('');
+
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId,
     iosClientId,
@@ -25,31 +27,37 @@ export function Login({ navigation }): JSX.Element {
 
   useEffect(() => {
     if (response?.type === 'success') {
-      setToken(response.authentication.accessToken);
       saveToken(response.authentication.accessToken);
-      getUserInfo();
     }
-  }, [response, isToken]);
+  }, [response]);
 
-  const getUserInfo = async () => {
-    try {
-      const response = await fetch(
-        'https://www.googleapis.com/userinfo/v2/me',
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
-      const userResponse = await response.json();
-      console.log('userResponse::::', userResponse);
-      saveUser(userResponse);
-      redirect();
-    } catch (error) {
-      alert('getUserInfo:' + error);
-    }
+  useEffect(() => {
+    console.log('dentro de use effect token :', token);
+    infoUser();
+  }, [token]);
+
+  const infoUser = () => {
+    let config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const url = 'https://www.googleapis.com/userinfo/v2/me';
+    axios
+      .get(url, config)
+      .then((response) => {
+        console.log(response.data);
+        saveUser(response.data);
+        redirect();
+      })
+      .catch((error) => {
+        alert('getUserInfo:' + error);
+      });
   };
 
-  const saveToken = async (token: string) => {
-    let tokenResult = await saveItem(ACCESS_TOKEN, token);
+  const saveToken = async (responseToken: string) => {
+    let tokenResult = await saveItem(ACCESS_TOKEN, responseToken);
+    setToken(responseToken);
     setIsToken(tokenResult);
   };
 

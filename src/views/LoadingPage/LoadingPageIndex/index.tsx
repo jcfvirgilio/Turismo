@@ -15,7 +15,7 @@ export function LoadingPage({ navigation }: LoadingPageProps): JSX.Element {
 
   useEffect(() => {
     redirect();
-  });
+  }, []);
 
   const redirect = async () => {
     const token = await getItem(ACCESS_TOKEN);
