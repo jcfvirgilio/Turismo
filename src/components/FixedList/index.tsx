@@ -20,7 +20,7 @@ export function FixedList({ containerStyle, onItemPress }): JSX.Element {
   const theme = useTheme();
 
   const places: ItemData[] = useSelector((state) =>
-    state.lugares.places?.results.map(({ formatted, confidence }) => {
+    state.rootReducer.places?.results.map(({ formatted, confidence }) => {
       return { formatted, confidence };
     }),
   );

@@ -4,7 +4,10 @@ import { RESULTS } from '../../consts';
 import { FixedList } from '../FixedList';
 import LoadingPageResults from '../../views/LoadingPage/LoadingPageResults';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLocationsActions } from '../../redux/actions/lugaresAction';
+import {
+  getLocationsActions,
+  actionResults,
+} from '../../redux/actions/lugaresAction';
 import {
   useTheme,
   VStack,
@@ -28,25 +31,47 @@ export function SearchComponent({ navigation }): JSX.Element {
   const [errors, setErrors] = useState<Partial<FormData>>({});
   const [isLoading, setIsLoading] = useState(false);
   const [showPlaces, setShowPlaces] = useState(false);
+  const resultsIA = useSelector((state) => state.rootReducer.resultsIA);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (!!resultsIA?.trim()) {
+      setIsLoading(false);
+      navigation.navigate(RESULTS);
+    }
+  }, [resultsIA]);
+
   const validate = () => {
-    const newErrors: Partial<FormData> = {};
+    const regex = /^[\p{L}\d\s]+(?:,\s*[\p{L}\d\s]+)*$/u;
+    const isValidFormat =
+      regex.test(formData.hobbies?.trim()) && formData.hobbies?.trim() !== '';
 
     if (!formData.destiny) {
-      newErrors.destiny = 'Escribe un destino';
+      errors.destiny = 'Escribe un destino';
+    } else {
+      errors.destiny = '';
     }
+
     if (!formData.hobbies) {
-      newErrors.hobbies = 'Escribe uno o varios hobbies';
+      errors.hobbies = 'Escribe uno o varios hobbies';
+    } else {
+      errors.hobbies = '';
     }
-    return Object.keys(newErrors).length === 0;
+
+    if (!isValidFormat) {
+      errors.hobbies = 'El formato no es valido, Ej: cultura, música';
+    } else {
+      errors.hobbies = '';
+    }
+
+    return errors.hobbies === '' && errors.destiny === '';
   };
 
   const handleChange = (field: keyof FormData, value: string) => {
     setFormData((prevData) => ({ ...prevData, [field]: value }));
   };
 
-  const handleDestinationKeyPress = ({ nativeEvent }) => {
+  const handleDestinationKeyPress = () => {
     const destiny = formData.destiny;
 
     if (destiny?.length > 2) {
@@ -63,26 +88,14 @@ export function SearchComponent({ navigation }): JSX.Element {
 
   const handleSubmit = async () => {
     setIsLoading(true);
-
-    // try {
-    //   if (validate()) {
-    //     const response = await OpenAI();
-    //     console.log('--------------', response);
-    //     navigation.navigate(RESULTS, { result: response });
-    //   }
-    // } catch (error) {
-    //   alert(error);
-    // }
-    //setIsLoading(false);
+    if (validate()) {
+      dispatch(actionResults(formData));
+    }
   };
 
   const handlePlaceItemPress = (placeSelected) => {
     console.log('Seleccionado:', placeSelected.formatted);
     handleChange('destiny', placeSelected.formatted.split(',')[0]);
-    // setFormData((prevData) => ({
-    //   ...prevData,
-    //   destiny: placeSelected.formatted,
-    // }));
     setShowPlaces(false);
   };
 
@@ -130,17 +143,14 @@ export function SearchComponent({ navigation }): JSX.Element {
               <FormControl isRequired isInvalid={errors.hobbies}>
                 <Input
                   variant="underlined"
-                  placeholder="Hoobies*"
+                  placeholder="Escribe mínimo 2 Hoobies*"
                   style={theme.styles.global.inputClass}
                   InputLeftElement={
                     <Ionicons shadow={5} name="book" size={16} color="black" />
                   }
-                  //value={hobbies}
                   onChangeText={(value) => handleChange('hobbies', value)}
                 />
-                <Text style={theme.styles.global.label} pt={5}>
-                  Ej. Cultura, Fiesta, Naturaleza...
-                </Text>
+
                 {errors.hobbies && (
                   <FormControl.ErrorMessage>
                     {errors.hobbies}

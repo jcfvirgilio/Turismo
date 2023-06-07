@@ -31,11 +31,21 @@ export const theme = extendTheme({
         color: '#FFF',
         fontWeight: 'bold',
       },
+      'titleCard': {
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
       'label': {
         color: 'silver',
         fontSize: 15,
         marginTop: -10,
         marginBottom: 40,
+      },
+      'errorLabel': {
+        fontSize: 30,
+        color: 'red',
+        textTransform: 'capitalize',
+        fontWeight: 'bold',
       },
       'inputClass': {
         color: 'black',

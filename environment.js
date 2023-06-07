@@ -9,16 +9,19 @@ const ENV = {
     androidClientId: [secret],
     iosClientId: [secret],
     expoClientId: [secret],
+    openaiId: [secret],
   },
   staging: {
     androidClientId: null,
     iosClientId: null,
     expoClientId: null,
+    openaiId: null,
   },
   production: {
     androidClientId: null,
     iosClientId: null,
     expoClientId: null,
+    openaiId: null
   }
 };
 

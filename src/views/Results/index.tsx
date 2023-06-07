@@ -1,6 +1,7 @@
 import React from 'react';
 import { CardCustom } from '../../components/Card';
 import { ScrollView } from 'native-base';
+import { useSelector } from 'react-redux';
 import {
   useTheme,
   Box,
@@ -16,12 +17,13 @@ type Props = {
 
 export const Results = ({ result }: Props) => {
   const theme = useTheme();
+  const resultsIA: string = useSelector((state) => state.rootReducer.resultsIA);
+
   const safeAreaProps = useSafeArea({
     safeAreaTop: true,
     pt: 2,
   });
 
-  console.info('RESULT:', result);
   return (
     <Box {...safeAreaProps}>
       <Box ml={3} w="95%">
@@ -29,13 +31,31 @@ export const Results = ({ result }: Props) => {
           Resultados
         </Heading>
         <Text mt={-5}>
-          Prueba de software con AI: Solo se muestran 2 resultados como ejemplo.
+          Prueba de software con AI: Solo se muestran 3 resultados como ejemplo.
         </Text>
       </Box>
       <ScrollView w="93%" h="93%" ml={3}>
         <Divider my="2" bg="gray.300" />
-        <CardCustom />
-        <CardCustom />
+        {resultsIA.split('@').map((seccion, index) => {
+          const data = seccion.split('|');
+          const title = data[0]?.split(':')[1];
+          const description = data[1]?.split(':')[1];
+          const location = data[2]?.split(':')[1];
+          const geoLocal = data[3]?.split(':')[1];
+
+          if (title) {
+            console.log('description:', data);
+            return (
+              <CardCustom
+                key={index}
+                title={title}
+                description={description}
+                location={location}
+                geolocal={geoLocal}
+              />
+            );
+          }
+        })}
       </ScrollView>
     </Box>
   );

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import lugares from './lugares';
+import rootReducer from './lugares';
 
 
 export default combineReducers({
-  lugares
+  rootReducer
 });
