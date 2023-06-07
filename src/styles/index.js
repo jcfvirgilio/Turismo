@@ -55,7 +55,7 @@ export const theme = extendTheme({
       'headerClass': {
         color: '#012E40',
         fontFamily: 'Quattrocento-Bold',
-        fontSize: Platform.OS === 'ios' ? 33 : 28,
+        fontSize: Platform.OS === 'ios' ? 30 : 25,
         fontWeight: 'bold',
         letterSpacing: 4,
         paddingBottom: 20

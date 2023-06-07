@@ -20,7 +20,7 @@ function generatePrompt({ destiny, hobbies }: propsPayload) {
 }
 
 export async function OpenAI(payload: propsPayload) {
-  console.log('PROMPTTTTTT::::::::::::::::::::::::::', generatePrompt(payload));
+  //console.log('PROMPTTTTTT::::::::::::::::::::::::::', generatePrompt(payload));
   // return `Title: JC Teatro del Bicentenario|Description: Teatro con representaciones de todo género.|Location: Av. Corregidora No. 102, Centro Histórico, 76050 Querétaro, Qro.|geolocal: 20.591807,-100.387743 @Title: Recinto Cultural La Esperanza|Description: Lugar de expresiones artísticas con óperas, música, teatro, etc.|Location: Miguel Lerdo de Tejada No. 516, Col. Centro, 76000 Querétaro, Qro.|geolocal: 20.592432,-100.38635 @Title: Barcito Nómada|Description: Espacio gastronómico cervecero con actividades culturales.|Location: Morones No. 1, El Paraíso, 76140 Querétaro, Qro.|geolocal: 20.584882,-100.423615`;
 
   const openai = new OpenAIApi(configuration);
