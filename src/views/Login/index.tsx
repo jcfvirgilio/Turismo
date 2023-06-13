@@ -32,7 +32,6 @@ export function Login({ navigation }): JSX.Element {
   }, [response]);
 
   useEffect(() => {
-    console.log('dentro de use effect token :', token);
     infoUser();
   }, [token]);
 
@@ -51,7 +50,7 @@ export function Login({ navigation }): JSX.Element {
         redirect();
       })
       .catch((error) => {
-        alert('getUserInfo:' + error);
+        console.log('getUserInfo:' + error);
       });
   };
 

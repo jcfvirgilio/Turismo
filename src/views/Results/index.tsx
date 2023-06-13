@@ -1,5 +1,7 @@
 import React from 'react';
 import { CardCustom } from '../../components/Card';
+import { Header } from '../../components/Header';
+
 import { ScrollView } from 'native-base';
 import { useSelector } from 'react-redux';
 import {
@@ -26,7 +28,8 @@ export const Results = ({ result }: Props) => {
 
   return (
     <Box {...safeAreaProps}>
-      <Box ml={3} w="95%">
+      <Header showBack />
+      <Box ml={3} w="95%" paddingTop={4}>
         <Heading shadow={2} style={theme.styles.global.headerClass}>
           Resultados
         </Heading>
