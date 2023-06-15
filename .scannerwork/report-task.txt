@@ -1,6 +1,0 @@
-projectKey=Turismo
-serverUrl=http://localhost:9092
-serverVersion=10.0.0.68432
-dashboardUrl=http://localhost:9092/dashboard?id=Turismo
-ceTaskId=AYi_0ccffw_PIXPUY7W2
-ceTaskUrl=http://localhost:9092/api/ce/task?id=AYi_0ccffw_PIXPUY7W2
