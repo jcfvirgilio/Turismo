@@ -2,9 +2,9 @@ import React from 'react';
 import { CardCustom } from '../../components/Card';
 import { Header } from '../../components/Header';
 
-import { ScrollView } from 'native-base';
 import { useSelector } from 'react-redux';
 import {
+  ScrollView,
   useTheme,
   Box,
   useSafeArea,
